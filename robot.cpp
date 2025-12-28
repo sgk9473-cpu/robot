@@ -290,15 +290,16 @@ void print_robot(int offset)
 // 打印拿着的积木
 void print_hold_block(int offset, int num)
 {
-    if(num>=0&&num<10)
+    if (num >= 0 && num < 10)
     {
-    setCursorPos(14, 10);
-    cout << string(offset, ' ') + "+---+\n";
-    setCursorPos(14, 11);
-    cout << string(offset, ' ') + "| " << num << " |\n";
-    setCursorPos(14, 12);
-    cout << string(offset, ' ') + "+---+\n";}
-    else if((num>=10&&num<100)||(num<0&&num>-10))
+        setCursorPos(14, 10);
+        cout << string(offset, ' ') + "+---+\n";
+        setCursorPos(14, 11);
+        cout << string(offset, ' ') + "| " << num << " |\n";
+        setCursorPos(14, 12);
+        cout << string(offset, ' ') + "+---+\n";
+    }
+    else if ((num >= 10 && num < 100) || (num < 0 && num > -10))
     {
         setCursorPos(14, 10);
         cout << string(offset, ' ') + "+---+\n";
@@ -307,7 +308,7 @@ void print_hold_block(int offset, int num)
         setCursorPos(14, 12);
         cout << string(offset, ' ') + "+---+\n";
     }
-    else if((num>=100&&num<1000)||(num<= -10&&num>-100))
+    else if ((num >= 100 && num < 1000) || (num <= -10 && num > -100))
     {
         setCursorPos(14, 10);
         cout << string(offset, ' ') + "+---+\n";
@@ -383,7 +384,7 @@ void level_1(int m, vector<string> instructions, vector<int> instruction_X)
         Sleep(1000);  // 可视化
         if (instructions[i] == "inbox")
         {
-            if(entry_list.empty())
+            if (entry_list.empty())
             {
                 break;
             }
@@ -550,7 +551,7 @@ void print_level_2(vector<int> entry_list)
         cout << j / 10 - 1;
     }
 }
-void level_2(int m, vector<string> instructions, vector<int> instruction_X, vector<int> entry_list, vector<int> out_list)
+void level_2(int m, vector<string> instructions, vector<int> instruction_X, vector<int> entry_list, vector<int> out_list, int level_choice)
 {
     vector<int> valid_area(3);       // 空地
     vector<bool> is_valid(3, false); // 空地是否被占用
@@ -563,7 +564,7 @@ void level_2(int m, vector<string> instructions, vector<int> instruction_X, vect
     {
         setCursorPos(67, 11 + i);
         cout << i + 1 << " " << instructions[i];
-        if(instructions[i]=="jump"||instructions[i]=="jumpifzero"||instructions[i]=="add"||instructions[i]=="sub"||instructions[i]=="copyfrom"||instructions[i]=="copyto")
+        if (instructions[i] == "jump" || instructions[i] == "jumpifzero" || instructions[i] == "add" || instructions[i] == "sub" || instructions[i] == "copyfrom" || instructions[i] == "copyto")
         {
             cout << " " << instruction_X[i];
         }
@@ -581,7 +582,7 @@ void level_2(int m, vector<string> instructions, vector<int> instruction_X, vect
         Sleep(1000);  // 可视化
         if (instructions[i] == "inbox")
         {
-            if(entry_list.empty())
+            if (entry_list.empty())
             {
                 break;
             }
@@ -741,9 +742,10 @@ void level_2(int m, vector<string> instructions, vector<int> instruction_X, vect
             break;
         }
     }
-    if(is_error==true)
-    setCursorPos(0, 35); // 调整光标
-    else setCursorPos(0, 34);
+    if (is_error == true)
+        setCursorPos(0, 35); // 调整光标
+    else
+        setCursorPos(0, 34);
     // 检查是否通关
     if (user_out == out_list)
     {
@@ -751,12 +753,12 @@ void level_2(int m, vector<string> instructions, vector<int> instruction_X, vect
     }
     if (!is_pass && !is_error)
     {
-        cout << "You have failed to pass Level 2 !" << endl;
+        cout << "You have failed to pass Level " << level_choice << " !" << endl;
     }
     if (is_pass && !is_error)
     {
-        cout << "Congratualations! You have passed Level 2 !" << endl;
-        levelpassed[1] = true;
+        cout << "Congratualations! You have passed Level " << level_choice << " !" << endl;
+        levelpassed[level_choice - 1] = true;
     }
     cout << "Press return key to return to Level Select..." << endl; // 等待回车
     cin.ignore();                                                    // 清除输入缓冲区中的换行符
@@ -807,218 +809,51 @@ void print_level_3(vector<int> entry_list)
     }
 }
 
-void level_3(int m, vector<string> instructions, vector<int> instruction_X, vector<int> entry_list, vector<int> out_list)
+void print_level_4(vector<int> entry_list)
 {
-    vector<int> valid_area(3);       // 空地
-    vector<bool> is_valid(3, false); // 空地是否被占用
-    vector<int> user_out;            // 经过输入指令输出的序列
-    bool is_hold_block = false;      // 机器人手上是否有积木
-    int current_hold_num = 0;        // 机器人手上的积木号
-    bool is_pass = false;            // 是否通关
-    bool is_error = false;           // 是否发生错误
-    for (int i = 0; i < m; i++)      // 打印code
+    system("cls"); // 清屏
+    cout << "===========" << " Start to challenge Level 4 " << "===========" << endl;
+    cout << "Level 4 is playing..." << endl;
+    cout << "Level information:" << endl;
+    cout << "Compute the total sum of zeros, the total sum of negative numbers, and the total sum of positive numbers." << endl;
+    cout << "a.Input and output of the level:" << endl;
+    cout << "  i.Input: 5 -3 0 7 -2 0 10 -8" << endl;
+    cout << "  ii.Output: 0 -13 22" << endl;
+    cout << "b.Number of available open spaces: 3" << endl;
+    cout << "c.Available instruction set: inbox outbox copyfrom copyto add sub jump jumpifzero" << endl;
+    cout << "---------------------------------------------------------------------------------------------" << endl;
+    setCursorPos(0, 11);
+    cout << "IN";
+    for (int i = 0; i <= entry_list.size() - 1; i++)
     {
-        setCursorPos(67, 11 + i);
-        cout << i + 1 << " " << instructions[i];
-        if(instructions[i]=="jump"||instructions[i]=="jumpifzero"||instructions[i]=="add"||instructions[i]=="sub"||instructions[i]=="copyfrom"||instructions[i]=="copyto")
-        {
-            cout << " " << instruction_X[i];
-        }
+        print_block(4, i * 3 + 10, entry_list[i]);
     }
-    // 遍历
-    for (int i = 0; i < m; i++)
+    for (int i = 0; i <= entry_list.size() - 1; i++)
     {
-        for (int i = 0; i < m; i++)
-        {
-            setCursorPos(65, 11 + i);
-            cout << " ";
-        }
-        setCursorPos(65, 11 + i);
-        cout << "> "; // 更新>的位置
-        Sleep(1000);  // 可视化
-        if (instructions[i] == "inbox")
-        {
-            if(entry_list.empty())
-            {
-                break;
-            }
-            inbox(is_hold_block, entry_list, current_hold_num);
-            for (int j = 0; j < entry_list.size(); j++)
-            {
-                print_block(4, j * 3 + 10, entry_list[j]);
-            }
-            for (int j = entry_list.size(); j < 8; j++)
-            {
-                print_blank_block(4, j * 3 + 10);
-            }
-            print_hold_block(0, current_hold_num); // 更新输入序列
-            Sleep(1000);                           // 可视化
-        }
-        else if (instructions[i] == "outbox")
-        {
-            if (!is_outbox(is_hold_block))
-            {
-                is_error = true;
-                setCursorPos(0, 34);
-                cout << "                                            "; // 清除
-                setCursorPos(0, 34);
-                cout << "Error on instruction " << i + 1 << endl;
-                break;
-            }
-            outbox(is_hold_block, user_out, current_hold_num);
-            for (int j = 0; j <= 25; j++) // 向右移动
-            {
-                for (int m = 10; m <= 21; m++)
-                {
-                    for (int n = 14; n <= 49; n++)
-                    {
-                        setCursorPos(n, m);
-                        cout << " ";
-                    }
-                }
-                print_robot(j);
-                print_hold_block(j, current_hold_num);
-                Sleep(10);
-            }
-            for (int j = 0; j < user_out.size(); j++)
-            {
-                print_block(50, j * 3 + 10, user_out[user_out.size() - 1 - j]);
-            }
-            for (int j = user_out.size(); j < 8; j++)
-            {
-                print_blank_block(50, j * 3 + 10);
-            } // 更新输出序列
-            for (int j = 25; j >= 0; j--)
-            {
-                for (int m = 10; m <= 21; m++)
-                {
-                    for (int n = 14; n <= 49; n++)
-                    {
-                        setCursorPos(n, m);
-                        cout << " ";
-                    }
-                }
-                print_robot(j);
-                Sleep(10);
-            } // 向左移动
-        }
-        else if (instructions[i] == "add") // add操作
-        {
-            if (!is_add(is_hold_block, instruction_X[i], is_valid))
-            {
-                is_error = true;
-                setCursorPos(0, 34);
-                cout << "                                            "; // 清除
-                setCursorPos(0, 34);
-                cout << "Error on instruction " << i + 1 << endl;
-                break;
-            }
-            add(instruction_X[i], valid_area, current_hold_num);
-            print_hold_block(0, current_hold_num + valid_area[instruction_X[i]]);
-            Sleep(1000); // 可视化
-        }
-        else if (instructions[i] == "sub") // sub操作
-        {
-            if (!is_sub(is_hold_block, instruction_X[i], is_valid))
-            {
-                is_error = true;
-                setCursorPos(0, 34);
-                cout << "                                            "; // 清除
-                setCursorPos(0, 34);
-                cout << "Error on instruction " << i + 1 << endl;
-                break;
-            }
-            sub(instruction_X[i], valid_area, current_hold_num);
-            print_hold_block(0, current_hold_num - valid_area[instruction_X[i]]);
-            Sleep(1000); // 可视化
-        }
-        else if (instructions[i] == "copyto") // copyto操作
-        {
-            if (!is_copyto(is_hold_block, instruction_X[i], is_valid))
-            {
-                is_error = true;
-                setCursorPos(0, 34);
-                cout << "                                            "; // 清除
-                setCursorPos(0, 34);
-                cout << "Error on instruction " << i + 1 << endl;
-                break;
-            }
-            copyto(instruction_X[i], valid_area, current_hold_num, is_valid);
-            print_block(instruction_X[i] * 10 + 17, 23, current_hold_num);
-            Sleep(1000); // 可视化
-        }
-        else if (instructions[i] == "copyfrom") // copyfrom操作
-        {
-            if (!is_copyfrom(instruction_X[i], is_valid))
-            {
-                is_error = true;
-                setCursorPos(0, 34);
-                cout << "                                            "; // 清除
-                setCursorPos(0, 34);
-                cout << "Error on instruction " << i + 1 << endl;
-                break;
-            }
-            copyfrom(instruction_X[i], valid_area, current_hold_num, is_hold_block);
-            print_hold_block(0, valid_area[instruction_X[i]]);
-            Sleep(1000); // 可视化
-        }
-        else if (instructions[i] == "jump") // jump操作
-        {
-            if (!is_jump(instruction_X[i], i, m))
-            {
-                is_error = true;
-                setCursorPos(0, 34);
-                cout << "                                            "; // 清除
-                setCursorPos(0, 34);
-                cout << "Error on instruction " << i + 1 << endl;
-                break;
-            }
-            jump(instruction_X[i], i);
-        }
-        else if (instructions[i] == "jumpifzero") // jumpifzero操作
-        {
-            if (!is_jumpifzero(instruction_X[i], i, m, is_hold_block))
-            {
-                is_error = true;
-                setCursorPos(0, 34);
-                cout << "                                            "; // 清除
-                setCursorPos(0, 34);
-                cout << "Error on instruction " << i + 1 << endl;
-                break;
-            }
-            jumpifzero(instruction_X[i], i, current_hold_num);
-        }
-        else // 指令不是以上操作，发生错误
-        {
-            is_error = true;
-            setCursorPos(0, 34);
-            cout << "                                            "; // 清除
-            setCursorPos(0, 34);
-            cout << "Error on instruction " << i + 1 << endl;
-            break;
-        }
+        print_blank_block(50, i * 3 + 10);
     }
-    if(is_error==true)
-    setCursorPos(0, 35); // 调整光标
-    else setCursorPos(0, 34);
-    // 检查是否通关
-    if (user_out == out_list)
+    setCursorPos(57, 11);
+    cout << "OUT";
+    for (int i = 0; i < 24; ++i)
     {
-        is_pass = true;
+        setlocale(LC_ALL, "");
+        setCursorPos(62, i + 10);
+        wcout << L'│' << '\n';
     }
-    if (!is_pass && !is_error)
+    setCursorPos(63, 10);
+    cout << " ======= CODE =======";
+    print_robot(0);
+    for (int j = 17; j <= 37; j += 10)
     {
-        cout << "You have failed to pass Level 3 !" << endl;
+        print_blank_block(j, 23);
     }
-    if (is_pass && !is_error)
+    for (int j = 19; j <= 39; j += 10)
     {
-        cout << "Congratualations! You have passed Level 3 !" << endl;
-        levelpassed[2] = true;
+        setCursorPos(j, 26);
+        cout << j / 10 - 1;
     }
-    cout << "Press return key to return to Level Select..." << endl; // 等待回车
-    cin.ignore();                                                    // 清除输入缓冲区中的换行符
-    cin.get();                                                       // 等待用户按下回车
 }
+
 // 主函数
 int main()
 {
@@ -1103,12 +938,12 @@ int main()
                 }
             }
             print_level_2(entry_list);
-            level_2(m, instructions, instruction_X, entry_list, out_list);
+            level_2(m, instructions, instruction_X, entry_list, out_list, level_choice);
         }
         else if (level_choice == 3)
         {
             vector<int> entry_list = {6, 2, 7, 7, -9, 3, -3, -3}; // 输入序列
-            vector<int> out_list = {7, -3}; // 目标输出序列
+            vector<int> out_list = {7, -3};                       // 目标输出序列
             print_level_3(entry_list);
             // 输入
             setCursorPos(0, 34);
@@ -1129,7 +964,34 @@ int main()
                 }
             }
             print_level_3(entry_list);
-            level_3(m, instructions, instruction_X, entry_list, out_list);       //2、3一样的操作
+            level_2(m, instructions, instruction_X, entry_list, out_list, level_choice); // 2、3一样的操作
+        }
+
+        else if (level_choice == 4)
+        {
+            vector<int> entry_list = {5, -3, 0, 7, -2, 0, 10, -8}; // 输入序列
+            vector<int> out_list = {0, -13, 22};                   // 目标输出序列
+            print_level_4(entry_list);
+            // 输入
+            setCursorPos(0, 34);
+            cout << "Please enter how many steps you want to take: ";
+            int m;
+            cin >> m;                        // m为指令数
+            vector<string> instructions(m);  // 指令序列
+            vector<int> instruction_X(m, 0); // 指令X序列
+            cout << "Please enter your operations: " << endl;
+            for (int i = 0; i < m; i++)
+            {
+                cin >> instructions[i];
+                if (instructions[i] == "add" || instructions[i] == "sub" || instructions[i] == "copyto" || instructions[i] == "copyfrom" || instructions[i] == "jump" || instructions[i] == "jumpifzero")
+                {
+                    int x;
+                    cin >> x;
+                    instruction_X[i] = x;
+                }
+            }
+            print_level_4(entry_list);
+            level_2(m, instructions, instruction_X, entry_list, out_list, level_choice);
         }
         // 玩完保存
         saveprogress();
